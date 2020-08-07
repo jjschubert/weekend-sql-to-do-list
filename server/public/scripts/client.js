@@ -2,14 +2,14 @@ console.log('client.js connected');
 
 $(document).ready(onReady);
 
-function onReady () {
-console.log('jquery running');
+function onReady() {
+    console.log('jquery running');
 
-//add click listeners
-$('#submit').on('click', submitItem)
-$('#displayList').on('click', '.doneBtn', markComplete)
-//load data from server
-displayItems();
+    //add click listeners
+    $('#submit').on('click', submitItem)
+    $('#displayList').on('click', '.doneBtn', markComplete)
+    //load data from server
+    displayItems();
 }
 
 //mark item done in DB
@@ -20,7 +20,6 @@ function markComplete() {
     let status = {
         status: 'Done',
     };
-
     $.ajax({
         method: 'PUT',
         url: `/todo/${idToUpdate}`,
@@ -40,7 +39,7 @@ function displayItems() {
         url: '/todo'
     }).then(function (response) {
         const taskList = response;
-        for (let i=0; i < taskList.length; i++) {
+        for (let i = 0; i < taskList.length; i++) {
             console.log(taskList);
             $('#displayList').append(
                 `<tr data-item-id="${taskList[i].id}">
@@ -50,21 +49,26 @@ function displayItems() {
                 <td class="doneBtnBox"></td>
                 <tr>
                 `
-            ); 
+            );
             if (taskList[i].status === 'Not done') {
-                $('.doneBtnBox').empty();
+               console.log('in status notDone', taskList[i].task );
+                 $('.doneBtnBox').text('');
                 $('.doneBtnBox').append(`<button class="doneBtn">Mark Completed</button>`)
+            } else if (taskList[i].status === 'Done') {
+                console.log('in status Done', taskList[i].task);
+                $('.doneBtnBox').text(''); //this is not clearing
+                $('tr').addClass('taskCompleted'); // this is working but also adding to title
             };
         }
     }).catch(function (error) {
         console.log('error in GET', error)
     });
-}
+}ç
 
 //send item to DB
 function submitItem() {
     console.log('in submitItem');
-    
+
     let itemToAdd = {
         task: $('#taskIn').val(),
         goal: $('#goalIn').val(),
