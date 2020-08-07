@@ -18,7 +18,7 @@ function markComplete() {
     let idToUpdate = $(this).closest('tr').data('item-id');
     console.log(idToUpdate);
     let status = {
-        status: 'done',
+        status: 'Done',
     };
 
     $.ajax({

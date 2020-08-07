@@ -36,7 +36,7 @@ router.put('/:id', (req, res) => {
     console.log(`updating task ${id} with`, task);
     let queryText = 
     `UPDATE "items"
-    SET "status" = 'done'
+    SET "status" = 'Done'
     WHERE "id" = $1;`;
 
     pool.query(queryText, [id]).then((result) => {
