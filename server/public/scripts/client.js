@@ -36,6 +36,27 @@ function displayItems() {
     });
 }
 
+//send item to DB
 function submitItem() {
-
+    console.log('in submitItem');
+    
+    let itemToAdd = {
+        task: $('#taskIn').val(),
+        goal: $('#goalIn').val(),
+    }
+    if ($('#taskIn').val() === '' || $('#goalIn').val() === '') {
+        alert('Both fields are required');
+    } else {
+        $.ajax({
+            type: 'POST',
+            url: '/todo',
+            data: itemToAdd
+        }).then(function (response) {
+            console.log('Response from server: ', response);
+            displayItems();
+        }).catch(function (error) {
+            console.log('Error in POST ', error)
+            alert('Unable to add task at this time. Please try again later');
+        })
+    }
 }

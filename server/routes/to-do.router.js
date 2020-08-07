@@ -14,6 +14,22 @@ router.get('/', (req, res) => {
     });
 });
 
+//add new task to DB 
+router.post('/', (req, res) => {
+    let newTask = req.body;
+    console.log('adding task: ', newTask);
+
+    let queryText = `INSERT INTO "items"("task", "goal")
+    VALUES ($1, $2);`;
+    pool.query(queryText, [newTask.task, newTask.goal])
+    .then(result => {
+        res.sendStatus(201);
+    }).catch (error => {
+        console.log('Error in adding task ', error);
+        res.sendStatus(500);
+    });
+});
+
 
 
 
