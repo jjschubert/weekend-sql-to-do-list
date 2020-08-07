@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +9,30 @@
     <script src="scripts/client.js"></script>
     <link rel="stylesheet" href="styles/styles.css">
 </head>
+
 <body>
-    
+    <header>
+        <h1>To Do List</h1>
+        <div id="inputZone">
+            <label for="taskIn">Task: </label>
+            <input id="taskIn">
+            <label for="goalIn">Complete By: </label>
+            <input id="goalIn">
+        </div>
+    </header>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Task Description</th>
+                <th>Complete By </th>
+                <th>Task Status</th>
+            </tr>
+        </thead>
+        <tbody id="displayList">
+
+        </tbody>
+    </table>
 </body>
+
 </html>
