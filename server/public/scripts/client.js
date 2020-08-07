@@ -7,8 +7,14 @@ console.log('jquery running');
 
 //add click listeners
 $('#submit').on('click', submitItem)
+$('#displayList').on('click', '.doneBtn', markComplete)
 //load data from server
 displayItems();
+}
+
+//mark item done in DB
+function markComplete() {
+    console.log('in markComplete');
 }
 
 //get books from DB and append to table
@@ -26,10 +32,14 @@ function displayItems() {
                 <td>${taskList[i].task}</td>
                 <td>${taskList[i].goal}</td>
                 <td>${taskList[i].status}</td>
-                <td></td>
+                <td class="doneBtnBox"></td>
                 <tr>
                 `
-            )
+            ); 
+            if (taskList[i].status === 'Not done') {
+                $('.doneBtnBox').empty();
+                $('.doneBtnBox').append(`<button class="doneBtn">Mark Completed</button>`)
+            };
         }
     }).catch(function (error) {
         console.log('error in GET', error)
