@@ -15,6 +15,21 @@ displayItems();
 //mark item done in DB
 function markComplete() {
     console.log('in markComplete');
+    let idToUpdate = $(this).closest('tr').data('item-id');
+    console.log(idToUpdate);
+    let status = {
+        status: 'done',
+    };
+
+    $.ajax({
+        method: 'PUT',
+        url: `/todo/${idToUpdate}`,
+        data: status
+    }).then(function () {
+        displayItems();
+    }).catch(function (error) {
+        console.log(error);
+    });
 }
 
 //get books from DB and append to table
@@ -28,7 +43,7 @@ function displayItems() {
         for (let i=0; i < taskList.length; i++) {
             console.log(taskList);
             $('#displayList').append(
-                `<tr data-id-${taskList[i].id}>
+                `<tr data-item-id="${taskList[i].id}">
                 <td>${taskList[i].task}</td>
                 <td>${taskList[i].goal}</td>
                 <td>${taskList[i].status}</td>

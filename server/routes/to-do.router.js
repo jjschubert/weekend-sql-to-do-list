@@ -5,7 +5,7 @@ const pool = require('../modules/pool');
 
 //get all tasks
 router.get('/', (req, res) => {
-    let queryText = 'SELECT * FROM "items" ORDER BY "status" DESC;';
+    let queryText = 'SELECT * FROM "items" ORDER BY "status" ASC;';
     pool.query(queryText).then(result => {
         res.send(result.rows);
     }).catch(error => {
@@ -30,6 +30,22 @@ router.post('/', (req, res) => {
     });
 });
 
+router.put('/:id', (req, res) => {
+    let task = req.body; //task with updated status
+    let id = req.params.id;
+    console.log(`updating task ${id} with`, task);
+    let queryText = 
+    `UPDATE "items"
+    SET "status" = 'done'
+    WHERE "id" = $1;`;
+
+    pool.query(queryText, [id]).then((result) => {
+        res.sendStatus(200);
+    }).catch((error) => {
+        console.log('error in PUT', error);
+        res.sendStatus(500);
+    })
+})
 
 
 
