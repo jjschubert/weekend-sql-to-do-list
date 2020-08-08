@@ -10,8 +10,11 @@
     text-decoration: line-through
 }
 
-.check {
+.check,
+.doneBtnBox,
+.deleteBtn {
     text-align: center;
     vertical-align: middle;
 }
+
 
