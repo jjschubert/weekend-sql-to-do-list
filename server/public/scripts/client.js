@@ -41,29 +41,31 @@ function displayItems() {
         const taskList = response;
         for (let i = 0; i < taskList.length; i++) {
             console.log(taskList);
-            $('#displayList').append(
-                `<tr data-item-id="${taskList[i].id}">
-                <td>${taskList[i].task}</td>
-                <td>${taskList[i].goal}</td>
-                <td>${taskList[i].status}</td>
-                <td class="doneBtnBox"></td>
-                <tr>
-                `
-            );
-            if (taskList[i].status === 'Not done') {
-               console.log('in status notDone', taskList[i].task );
-                 $('.doneBtnBox').text('');
-                $('.doneBtnBox').append(`<button class="doneBtn">Mark Completed</button>`)
-            } else if (taskList[i].status === 'Done') {
-                console.log('in status Done', taskList[i].task);
-                $('.doneBtnBox').text(''); //this is not clearing
-                $('tr').addClass('taskCompleted'); // this is working but also adding to title
-            };
+            if (taskList[i].status === 'Done') {
+                $('#displayList').append(
+                    `<tr class="taskCompleted" data-item-id="${taskList[i].id}">
+                    <td>${taskList[i].task}</td>
+                    <td>${taskList[i].goal}</td>
+                    <td>${taskList[i].status}</td>
+                    <td></td>
+                    <tr>
+                    `)
+            } else if (taskList[i].status === 'Not done') {
+                $('#displayList').append(
+                    `<tr data-item-id="${taskList[i].id}">
+                            <td>${taskList[i].task}</td>
+                            <td>${taskList[i].goal}</td>
+                            <td>${taskList[i].status}</td>
+                            <td class="doneBtnBox"><button class="doneBtn">Mark Completed</button></td>
+                            <tr>
+                            `
+                )
+            }
         }
     }).catch(function (error) {
         console.log('error in GET', error)
     });
-}ç
+} ç
 
 //send item to DB
 function submitItem() {
