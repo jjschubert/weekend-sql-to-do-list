@@ -41,8 +41,8 @@ function editTask() {
     let itemTask = $(this).closest('tr').data('item-task');
     let itemCompletion = $(this).closest('tr').data('item-completion');
     $('#taskIn').val(itemTask),
-    $('#goalIn').val(itemGoal),
-    $("#completedDateIn").val(itemCompletion)
+        $('#goalIn').val(itemGoal),
+        $("#completedDateIn").val(itemCompletion)
 
     item.id = $(this).closest('tr').data('item-id');
     item.task = $('#taskIn').val();
@@ -149,7 +149,7 @@ function displayItems() {
 function handleSubmit() {
     console.log('in handleSubmit');
     if (editStatus === true) {
-        submitEditedItem();
+        submitEditedItem(item);
     } else {
         submitItem();
     }
@@ -157,8 +157,23 @@ function handleSubmit() {
 
 //send edits to DB
 function submitEditedItem() {
+
+    item.task = $('#taskIn').val();
+    item.goal = $('#goalIn').val();
+    item.completion = $('#completionIn').val();
+
+
     console.log('in submitEditedItem', item);
-    
+    $.ajax({
+        method: 'PUT',
+        url: `/edit/${item.id}`,
+        data: item
+    }).then(function () {
+        displayItems();
+        $('input').val();
+    }).catch(function (error) {
+        console.log('Error in submitEditedItem', error);
+    })
 }
 
 //send new item to DB
