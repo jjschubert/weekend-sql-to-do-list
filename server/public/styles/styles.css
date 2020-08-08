@@ -4,11 +4,14 @@
 }
 
 .taskCompleted {
-    background-color: lightslategray;
+    background-color: lightgray;
     color: blue;
+    font-style: italic;
+    text-decoration: line-through
 }
 
 .check {
     text-align: center;
     vertical-align: middle;
 }
+
