@@ -2,6 +2,9 @@ console.log('client.js connected');
 
 $(document).ready(onReady);
 
+let editStatus = '';
+let itemToEdit = '';
+
 function onReady() {
     console.log('jquery running');
 
@@ -9,9 +12,30 @@ function onReady() {
     $('#submit').on('click', submitItem)
     $('#displayList').on('click', '.doneBtn', markComplete)
     $('#displayList').on('click', '.deleteBtn', cautiousDelete)
+    $('#displayList').on('click', '.editBtn', editTask)
     //load data from server
     displayItems();
 }
+
+//opens edit status to add completed date
+function editTask() {
+    console.log('in editTask');
+    editStatus = true;
+    //add cancel button
+    $('#forCancelBtn').append(`
+    <button class="btn btn-secondary" id='cancelBtn'>Cancel<button>`);
+    $('#pageTitle').text('Edit Task');
+  
+    //fill inputs for editing
+    let itemGoal = $(this).closest('tr').data('item-goal');
+    let itemTask = $(this).closest('tr').data('item-task');
+    let itemCompletion = $(this).closest('tr').data('item-completion');
+    $('#taskIn').val(itemTask),
+    $('#goalIn').val(itemGoal),
+    $("#completedDateIn").val(itemCompletion)
+
+    itemToEdit.editStatus = 'toEdit';
+  }
 
 function cautiousDelete() {
     console.log('in deleteTask');
@@ -71,29 +95,32 @@ function displayItems() {
         type: 'GET',
         url: '/todo'
     }).then(function (response) {
-        const taskList = response;
-        for (let i = 0; i < taskList.length; i++) {
-            console.log(taskList);
-            if (taskList[i].status === 'Done') {
+        for (let i = 0; i < response.length; i++) {
+            const oneTask = response[i];
+            console.log(oneTask);
+            
+            if (oneTask.status === 'Done') {
                 $('#displayList').append(
-                    `<tr class="taskCompleted" data-item-id="${taskList[i].id}">
+                    `<tr data-item-completion="${oneTask.completion}" data-item-goal="${oneTask.goal}" data-item-id="${oneTask.id}" data-item-task="${oneTask.task}">
                     <td class="check" ><input type="checkbox" checked></td>
-                    <td>${taskList[i].task}</td>
-                    <td>${taskList[i].goal}</td>
-                    <td>${taskList[i].status}</td>
-                    <td>${taskList[i].completion}</td>
-                    <td><button class="deleteBtn btn btn-danger btn-sm">Delete</button></td>
+                    <td>${oneTask.task}</td>
+                    <td>${oneTask.goal}</td>
+                    <td>${oneTask.status}</td>
+                    <td>${oneTask.completion}</td>
+                    <td><button class="deleteBtn btn btn-danger btn-sm">Delete</button>
+                    <button class="btn btn-outline-dark btn-sm editBtn">Edit</button></td>
                     <tr>
                     `)
-            } else if (taskList[i].status === 'Not done') {
+            } else if (oneTask.status === 'Not done') {
                 $('#displayList').append(
-                    `<tr data-item-id="${taskList[i].id}">
+                    `<tr data-item-completion="${oneTask.completion}" data-item-goal="${oneTask.goal}" data-item-id="${oneTask.id}" data-item-task="${oneTask.task}" >
                     <td class="doneBtnBox"><button class="doneBtn btn btn-success btn-sm">Mark Done</button></td>
-                            <td>${taskList[i].task}</td>
-                            <td>${taskList[i].goal}</td>
-                            <td>${taskList[i].status}</td>
+                            <td>${oneTask.task}</td>
+                            <td>${oneTask.goal}</td>
+                            <td>${oneTask.status}</td>
                             <td></td>
-                            <td><button class="deleteBtn btn btn-danger btn-sm">Delete</button></td>
+                            <td><button class="deleteBtn btn btn-danger btn-sm">Delete</button>
+                            <button class="btn btn-outline-dark btn-sm editBtn">Edit</button></td>
                             <tr>
                             `)
             }}
@@ -112,7 +139,7 @@ function submitItem() {
         completion: $("#completedDateIn").val()
     }
     if ($('#taskIn').val() === '' || $('#goalIn').val() === '' || $("#completedDateIn").val() === '') {
-        alert('Both fields are required');
+        alert('All fields are required');
     } else {
         $.ajax({
             type: 'POST',
