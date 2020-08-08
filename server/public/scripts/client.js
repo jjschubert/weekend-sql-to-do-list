@@ -8,27 +8,42 @@ function onReady() {
     //add click listeners
     $('#submit').on('click', submitItem)
     $('#displayList').on('click', '.doneBtn', markComplete)
-    $('#displayList').on('click', '.deleteBtn', deleteTask)
+    $('#displayList').on('click', '.deleteBtn', cautiousDelete)
     //load data from server
     displayItems();
 }
 
-//delete task from list/DB
-function deleteTask() {
+function cautiousDelete() {
     console.log('in deleteTask');
     let idToDelete = $(this).closest('tr').data('item-id')
     console.log(idToDelete);
+    swal({
+        title: "Are you sure?",
+        text: "Once deleted, you will not be able to recover this task!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+      })
+      .then((willDelete) => {
+        if (willDelete) {
+          swal("Your task has been deleted!", {
+            icon: "success",
+          });
+          $.ajax({
+            method: 'DELETE',
+            url: `/todo/${idToDelete}`
+        }).then(function (response) {
+            displayItems();
+        }).catch(function (error) {
+            console.log('error in DELETE', error);
+        });
+        } else {
+          swal("Your task is safe!");
+        }
+      });
 
-    $.ajax({
-        method: 'DELETE',
-        url: `/todo/${idToDelete}`
-    }).then(function (response) {
-        displayItems();
-    }).catch(function (error) {
-        console.log('error in DELETE', error);
-    })
-    
-};
+}
+  
 
 //mark item done in DB
 function markComplete() {
@@ -66,17 +81,17 @@ function displayItems() {
                     <td>${taskList[i].task}</td>
                     <td>${taskList[i].goal}</td>
                     <td>${taskList[i].status}</td>
-                    <td><button class="deleteBtn btn btn-danger">Delete</button></td>
+                    <td><button class="deleteBtn btn btn-danger btn-sm">Delete</button></td>
                     <tr>
                     `)
             } else if (taskList[i].status === 'Not done') {
                 $('#displayList').append(
                     `<tr data-item-id="${taskList[i].id}">
-                    <td class="doneBtnBox"><button class="doneBtn btn btn-success">Done</button></td>
+                    <td class="doneBtnBox"><button class="doneBtn btn btn-success btn-sm">Done</button></td>
                             <td>${taskList[i].task}</td>
                             <td>${taskList[i].goal}</td>
                             <td>${taskList[i].status}</td>
-                            <td><button class="deleteBtn btn btn-danger">Delete</button></td>
+                            <td><button class="deleteBtn btn btn-danger btn-sm">Delete</button></td>
                             <tr>
                             `)
             }}

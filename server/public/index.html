@@ -6,15 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>To Do List</title>
     <script src="vendors/jquery-3.5.1.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="scripts/client.js"></script>
     <link rel="stylesheet" href="styles/bootstrap.css">
     <link rel="stylesheet" href="styles/styles.css">
 </head>
 
 <body>
-    <header>
+    <header class="container">
         <h1>To Do List</h1>
-        <div id="inputZone">
+        <div id="inputZone" class="input-group mb-3">
             <label for="taskIn">Task: </label>
             <input id="taskIn">
             <label for="goalIn">Complete By: </label>
@@ -23,19 +24,21 @@
         </div>
     </header>
 
-    <table>
-        <thead>
-            <tr>
-                <th></th>
-                <th>Task Description</th>
-                <th>Complete By </th>
-                <th>Task Status</th>
-            </tr>
-        </thead>
-        <tbody id="displayList">
+    <div class="container">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Task Description</th>
+                    <th>Complete By </th>
+                    <th>Task Status</th>
+                </tr>
+            </thead>
+            <tbody id="displayList">
 
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    </div>
 </body>
 
 </html>
