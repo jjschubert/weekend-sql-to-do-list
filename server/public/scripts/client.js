@@ -45,9 +45,6 @@ function editTask() {
         $("#completedDateIn").val(itemCompletion)
 
     item.id = $(this).closest('tr').data('item-id');
-    item.task = $('#taskIn').val();
-    item.goal = $('#goalIn').val();
-    item.completion = $("#completedDateIn").val();
     item.editStatus = 'toEdit';
     console.log('in edit', item);
 }
@@ -117,14 +114,14 @@ function displayItems() {
 
             if (oneTask.status === 'Done') {
                 $('#displayList').append(
-                    `<tr data-item-completion="${oneTask.completion}" data-item-goal="${oneTask.goal}" data-item-id="${oneTask.id}" data-item-task="${oneTask.task}">
+                    `<tr class="taskCompleted" data-item-completion="${oneTask.completion}" data-item-goal="${oneTask.goal}" data-item-id="${oneTask.id}" data-item-task="${oneTask.task}">
                     <td class="check" ><input type="checkbox" checked></td>
                     <td>${oneTask.task}</td>
                     <td>${oneTask.goal}</td>
                     <td>${oneTask.status}</td>
                     <td>${oneTask.completion}</td>
-                    <td><button class="deleteBtn btn btn-danger btn-sm">Delete</button>
-                    <button class="btn btn-outline-dark btn-sm editBtn">Edit</button></td>
+                    <td><button class="btn btn-outline-dark btn-sm editBtn">Edit</button>
+                    <button class="deleteBtn btn btn-danger btn-sm">Delete</button></td>
                     <tr>
                     `)
             } else if (oneTask.status === 'Not done') {
@@ -135,8 +132,8 @@ function displayItems() {
                             <td>${oneTask.goal}</td>
                             <td>${oneTask.status}</td>
                             <td></td>
-                            <td><button class="deleteBtn btn btn-danger btn-sm">Delete</button>
-                            <button class="btn btn-outline-dark btn-sm editBtn">Edit</button></td>
+                            <td><button class="btn btn-outline-dark btn-sm editBtn">Edit</button>
+                            <button class="deleteBtn btn btn-danger btn-sm">Delete</button></td>
                             <tr>
                             `)
             }
@@ -149,7 +146,7 @@ function displayItems() {
 function handleSubmit() {
     console.log('in handleSubmit');
     if (editStatus === true) {
-        submitEditedItem(item);
+        submitEditedItem();
     } else {
         submitItem();
     }
@@ -162,7 +159,6 @@ function submitEditedItem() {
     item.goal = $('#goalIn').val();
     item.completion = $('#completionIn').val();
 
-
     console.log('in submitEditedItem', item);
     $.ajax({
         method: 'PUT',
@@ -170,7 +166,7 @@ function submitEditedItem() {
         data: item
     }).then(function () {
         displayItems();
-        $('input').val();
+        cancelEdit();
     }).catch(function (error) {
         console.log('Error in submitEditedItem', error);
     })
