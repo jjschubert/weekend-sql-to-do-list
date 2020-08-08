@@ -3,6 +3,24 @@ const router = express.Router();
 
 const pool = require('../modules/pool');
 
+//delete items
+router.delete('/:id', (req, res) => {
+    let id = req.params.id;
+    console.log('Delete route with id of', id);
+    
+    let queryText = 
+    `DELETE FROM "items"
+    WHERE "id" = $1`
+
+    pool.query(queryText, [id]).then((result) => {
+        res.sendStatus(204);
+      }).catch((error) => { 
+        console.log('error in DELETE', error);
+        res.sendStatus(500);
+      })
+    });
+
+
 //get all tasks
 router.get('/', (req, res) => {
     let queryText = 'SELECT * FROM "items" ORDER BY "status" DESC;';
