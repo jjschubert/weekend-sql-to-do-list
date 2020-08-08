@@ -13,9 +13,19 @@ function onReady() {
     $('#displayList').on('click', '.doneBtn', markComplete)
     $('#displayList').on('click', '.deleteBtn', cautiousDelete)
     $('#displayList').on('click', '.editBtn', editTask)
+    $('#forCancelBtn').on('click', '#cancelBtn', cancelEdit);
     //load data from server
     displayItems();
 }
+
+function cancelEdit() {
+    $('#forCancelBtn').text('');
+    $('input').val('');
+    //turn title back to add book
+    $('#pageTitle').text('Add Task');
+    editStatus = false;
+  }
+
 
 //opens edit status to add completed date
 function editTask() {
