@@ -4,7 +4,7 @@
 }
 
 .taskCompleted {
-    background-color: lightgray;
+    background-color: #e6ebea;
     color: blue;
     font-style: italic;
     text-decoration: line-through
@@ -17,4 +17,56 @@
     vertical-align: middle;
 }
 
+label {
+    margin-left: 1em;
+    font-weight: bold;
+}
 
+h1 {
+    color: white;
+    text-align: center;
+    font-family: 'Bad Script', cursive;
+    margin-top: 1em;
+    font-size: 4em;
+}
+
+header {
+    background-color: #40b7ad;
+    padding: .5em 0;
+}
+
+h4 {
+    margin-left: 14em;
+    margin-top: 1em;
+    font-family: 'Bad Script', cursive;
+    font-size: 2em;
+    color: white;
+}
+
+label {
+    font-family: 'Bad Script', cursive;
+    color: white;
+    font-size: 1.5em;
+}
+
+#inputZone {
+    margin-top: 1em;
+    text-align: center;
+    margin-left: 28em;
+}
+
+table {
+    margin-top: 1em;
+}
+
+#submit {
+    margin-left: 1em;
+}
+
+
+img {
+    float: right;
+    height: 15em;
+    padding: 0;
+    margin-right: 4em;
+}

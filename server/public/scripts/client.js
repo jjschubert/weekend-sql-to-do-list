@@ -22,7 +22,7 @@ function cancelEdit() {
     $('#forCancelBtn').text('');
     $('input').val('');
     //turn title back to add book
-    $('#pageTitle').text('Add Task');
+    $('#inputTitle').text('Add Task');
     editStatus = false;
 }
 
@@ -34,7 +34,7 @@ function editTask() {
     //add cancel button
     $('#forCancelBtn').append(`
     <button class="btn btn-secondary" id='cancelBtn'>Cancel<button>`);
-    $('#pageTitle').text('Edit Task');
+    $('#inputTitle').text('Edit Task');
 
     //fill inputs for editing
     let itemGoal = $(this).closest('tr').data('item-goal');
