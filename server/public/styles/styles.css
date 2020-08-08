@@ -4,11 +4,17 @@
 }
 
 .taskCompleted {
-    background-color: lightslategray;
+    background-color: lightgray;
     color: blue;
+    font-style: italic;
+    text-decoration: line-through
 }
 
-.check {
+.check,
+.doneBtnBox,
+.deleteBtn {
     text-align: center;
     vertical-align: middle;
 }
+
+
