@@ -9,7 +9,7 @@ function onReady() {
     console.log('jquery running');
 
     //add click listeners
-    $('#submit').on('click', submitItem)
+    $('#submit').on('click', handleSubmit)
     $('#displayList').on('click', '.doneBtn', markComplete)
     $('#displayList').on('click', '.deleteBtn', deleteItem)
     $('#displayList').on('click', '.editBtn', editTask)
@@ -146,15 +146,29 @@ function displayItems() {
     });
 }
 
-//send item to DB
+function handleSubmit() {
+    console.log('in handleSubmit');
+    if (editStatus === true) {
+        submitEditedItem();
+    } else {
+        submitItem();
+    }
+}
+
+//send edits to DB
+function submitEditedItem() {
+    console.log('in submitEditedItem', item);
+    
+}
+
+//send new item to DB
 function submitItem() {
-    console.log('in submitItem');
 
     item = {
         task: $('#taskIn').val(),
         goal: $('#goalIn').val(),
-        completion: $("#completedDateIn").val()
     }
+    console.log('in submitItem', item);
     if ($('#taskIn').val() === '' || $('#goalIn').val() === '') {
         alert('Task and goal fields are required');
     } else {
