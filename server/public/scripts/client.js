@@ -3,7 +3,7 @@ console.log('client.js connected');
 $(document).ready(onReady);
 
 let editStatus = '';
-let itemToEdit = '';
+let item = {};
 
 function onReady() {
     console.log('jquery running');
@@ -11,7 +11,7 @@ function onReady() {
     //add click listeners
     $('#submit').on('click', submitItem)
     $('#displayList').on('click', '.doneBtn', markComplete)
-    $('#displayList').on('click', '.deleteBtn', cautiousDelete)
+    $('#displayList').on('click', '.deleteBtn', deleteItem)
     $('#displayList').on('click', '.editBtn', editTask)
     $('#forCancelBtn').on('click', '#cancelBtn', cancelEdit);
     //load data from server
@@ -24,7 +24,7 @@ function cancelEdit() {
     //turn title back to add book
     $('#pageTitle').text('Add Task');
     editStatus = false;
-  }
+}
 
 
 //opens edit status to add completed date
@@ -35,7 +35,7 @@ function editTask() {
     $('#forCancelBtn').append(`
     <button class="btn btn-secondary" id='cancelBtn'>Cancel<button>`);
     $('#pageTitle').text('Edit Task');
-  
+
     //fill inputs for editing
     let itemGoal = $(this).closest('tr').data('item-goal');
     let itemTask = $(this).closest('tr').data('item-task');
@@ -44,10 +44,15 @@ function editTask() {
     $('#goalIn').val(itemGoal),
     $("#completedDateIn").val(itemCompletion)
 
-    itemToEdit.editStatus = 'toEdit';
-  }
+    item.id = $(this).closest('tr').data('item-id');
+    item.task = $('#taskIn').val();
+    item.goal = $('#goalIn').val();
+    item.completion = $("#completedDateIn").val();
+    item.editStatus = 'toEdit';
+    console.log('in edit', item);
+}
 
-function cautiousDelete() {
+function deleteItem() {
     console.log('in deleteTask');
     let idToDelete = $(this).closest('tr').data('item-id')
     console.log(idToDelete);
@@ -57,27 +62,27 @@ function cautiousDelete() {
         icon: "warning",
         buttons: true,
         dangerMode: true,
-      })
-      .then((willDelete) => {
-        if (willDelete) {
-          swal("Your task has been deleted!", {
-            icon: "success",
-          });
-          $.ajax({
-            method: 'DELETE',
-            url: `/todo/${idToDelete}`
-        }).then(function (response) {
-            displayItems();
-        }).catch(function (error) {
-            console.log('error in DELETE', error);
+    })
+        .then((willDelete) => {
+            if (willDelete) {
+                swal("Your task has been deleted!", {
+                    icon: "success",
+                });
+                $.ajax({
+                    method: 'DELETE',
+                    url: `/todo/${idToDelete}`
+                }).then(function (response) {
+                    displayItems();
+                }).catch(function (error) {
+                    console.log('error in DELETE', error);
+                });
+            } else {
+                swal("Your task is safe!");
+            }
         });
-        } else {
-          swal("Your task is safe!");
-        }
-      });
 
 }
-  
+
 
 //mark item done in DB
 function markComplete() {
@@ -98,6 +103,7 @@ function markComplete() {
     });
 }
 
+
 //get books from DB and append to table
 function displayItems() {
     $('#displayList').empty();
@@ -108,7 +114,7 @@ function displayItems() {
         for (let i = 0; i < response.length; i++) {
             const oneTask = response[i];
             console.log(oneTask);
-            
+
             if (oneTask.status === 'Done') {
                 $('#displayList').append(
                     `<tr data-item-completion="${oneTask.completion}" data-item-goal="${oneTask.goal}" data-item-id="${oneTask.id}" data-item-task="${oneTask.task}">
@@ -133,28 +139,29 @@ function displayItems() {
                             <button class="btn btn-outline-dark btn-sm editBtn">Edit</button></td>
                             <tr>
                             `)
-            }}
+            }
+        }
     }).catch(function (error) {
         console.log('error in GET', error)
     });
-} 
+}
 
 //send item to DB
 function submitItem() {
     console.log('in submitItem');
 
-    let itemToAdd = {
+    item = {
         task: $('#taskIn').val(),
         goal: $('#goalIn').val(),
         completion: $("#completedDateIn").val()
     }
-    if ($('#taskIn').val() === '' || $('#goalIn').val() === '' || $("#completedDateIn").val() === '') {
-        alert('All fields are required');
+    if ($('#taskIn').val() === '' || $('#goalIn').val() === '') {
+        alert('Task and goal fields are required');
     } else {
         $.ajax({
             type: 'POST',
             url: '/todo',
-            data: itemToAdd
+            data: item
         }).then(function (response) {
             console.log('Response from server: ', response);
             displayItems();
