@@ -37,9 +37,9 @@ router.post('/', (req, res) => {
     let newTask = req.body;
     console.log('adding task: ', newTask);
 
-    let queryText = `INSERT INTO "items"("task", "goal")
-    VALUES ($1, $2);`;
-    pool.query(queryText, [newTask.task, newTask.goal])
+    let queryText = `INSERT INTO "items"("task", "goal", "completion")
+    VALUES ($1, $2, #3);`;
+    pool.query(queryText, [newTask.task, newTask.goal, newTask.completion])
     .then(result => {
         res.sendStatus(201);
     }).catch (error => {

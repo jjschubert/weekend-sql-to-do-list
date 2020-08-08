@@ -81,16 +81,18 @@ function displayItems() {
                     <td>${taskList[i].task}</td>
                     <td>${taskList[i].goal}</td>
                     <td>${taskList[i].status}</td>
+                    <td>${taskList[i].completion}</td>
                     <td><button class="deleteBtn btn btn-danger btn-sm">Delete</button></td>
                     <tr>
                     `)
             } else if (taskList[i].status === 'Not done') {
                 $('#displayList').append(
                     `<tr data-item-id="${taskList[i].id}">
-                    <td class="doneBtnBox"><button class="doneBtn btn btn-success btn-sm">Done</button></td>
+                    <td class="doneBtnBox"><button class="doneBtn btn btn-success btn-sm">Mark Done</button></td>
                             <td>${taskList[i].task}</td>
                             <td>${taskList[i].goal}</td>
                             <td>${taskList[i].status}</td>
+                            <td></td>
                             <td><button class="deleteBtn btn btn-danger btn-sm">Delete</button></td>
                             <tr>
                             `)
@@ -107,8 +109,9 @@ function submitItem() {
     let itemToAdd = {
         task: $('#taskIn').val(),
         goal: $('#goalIn').val(),
+        completion: $("#completedDateIn").val()
     }
-    if ($('#taskIn').val() === '' || $('#goalIn').val() === '') {
+    if ($('#taskIn').val() === '' || $('#goalIn').val() === '' || $("#completedDateIn").val() === '') {
         alert('Both fields are required');
     } else {
         $.ajax({
@@ -120,6 +123,7 @@ function submitItem() {
             displayItems();
             $('#taskIn').val('');
             $('#goalIn').val('');
+            $('#completedDateIn').val('');
         }).catch(function (error) {
             console.log('Error in POST ', error)
             alert('Unable to add task at this time. Please try again later');
