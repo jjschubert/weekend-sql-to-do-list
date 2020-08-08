@@ -66,17 +66,17 @@ function displayItems() {
                     <td>${taskList[i].task}</td>
                     <td>${taskList[i].goal}</td>
                     <td>${taskList[i].status}</td>
-                    <td><button class="deleteBtn">Delete</button></td>
+                    <td><button class="deleteBtn btn btn-danger">Delete</button></td>
                     <tr>
                     `)
             } else if (taskList[i].status === 'Not done') {
                 $('#displayList').append(
                     `<tr data-item-id="${taskList[i].id}">
-                    <td class="doneBtnBox"><button class="doneBtn">Done</button></td>
+                    <td class="doneBtnBox"><button class="doneBtn btn btn-success">Done</button></td>
                             <td>${taskList[i].task}</td>
                             <td>${taskList[i].goal}</td>
                             <td>${taskList[i].status}</td>
-                            <td><button class="deleteBtn">Delete</button></td>
+                            <td><button class="deleteBtn btn btn-danger">Delete</button></td>
                             <tr>
                             `)
             }}
