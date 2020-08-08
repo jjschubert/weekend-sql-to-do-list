@@ -12,9 +12,9 @@
 </head>
 
 <body>
-    <header>
+    <header class="container">
         <h1>To Do List</h1>
-        <div id="inputZone">
+        <div id="inputZone" class="input-group mb-3">
             <label for="taskIn">Task: </label>
             <input id="taskIn">
             <label for="goalIn">Complete By: </label>
@@ -23,19 +23,21 @@
         </div>
     </header>
 
-    <table>
-        <thead>
-            <tr>
-                <th></th>
-                <th>Task Description</th>
-                <th>Complete By </th>
-                <th>Task Status</th>
-            </tr>
-        </thead>
-        <tbody id="displayList">
+    <div class="container">
+        <table>
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Task Description</th>
+                    <th>Complete By </th>
+                    <th>Task Status</th>
+                </tr>
+            </thead>
+            <tbody id="displayList">
 
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    </div>
 </body>
 
 </html>
