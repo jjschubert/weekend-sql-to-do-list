@@ -3,6 +3,10 @@ const pg = require('pg');
 let config = {};
 
 if (process.env.DATABASE_URL) {
+
+  const params = url.parse(process.env.DATABASE_URL);
+  const auth = params.auth.split(':');
+
   config = {
     user: auth[0],
     password: auth[1],
