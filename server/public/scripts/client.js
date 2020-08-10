@@ -127,7 +127,7 @@ function displayItems() {
             } else if (oneTask.status === 'Not done') {
                 $('#displayList').append(
                     `<tr data-item-completion="${oneTask.completion}" data-item-goal="${oneTask.goal}" data-item-id="${oneTask.id}" data-item-task="${oneTask.task}" >
-                    <td class="doneBtnBox"><button class="doneBtn btn btn-success btn-sm">Mark Done</button></td>
+                    <td class="doneBtnBox"><button class="doneBtn btn btn-info btn-sm">Mark Done</button></td>
                             <td>${oneTask.task}</td>
                             <td>${oneTask.goal}</td>
                             <td>${oneTask.status}</td>
