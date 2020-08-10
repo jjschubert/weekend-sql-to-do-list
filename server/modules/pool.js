@@ -1,6 +1,7 @@
 const express = require('express'); //adding to match video
 const pg = require('pg');
 const url = require('url');
+
 const Pool = pg.Pool;
 
 let config = {};
@@ -9,7 +10,6 @@ if (process.env.DATABASE_URL) {
 
   const params = url.parse(process.env.DATABASE_URL);
   const auth = params.auth.split(':');
-  const Pool = pg.Pool;
 
   config = {
     user: auth[0],
