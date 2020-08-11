@@ -157,7 +157,7 @@ function submitEditedItem() {
 
     item.task = $('#taskIn').val();
     item.goal = $('#goalIn').val();
-    item.completion = $('#completionIn').val();
+    item.completion = $('#completedDateIn').val();
 
     console.log('in submitEditedItem', item);
     $.ajax({
