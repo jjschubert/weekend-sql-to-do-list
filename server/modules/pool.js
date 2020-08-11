@@ -1,4 +1,3 @@
-const express = require('express'); //adding to match video
 const pg = require('pg');
 const url = require('url');
 
